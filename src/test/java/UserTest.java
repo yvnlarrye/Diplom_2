@@ -1,6 +1,7 @@
 import org.junit.After;
 import org.junit.Before;
 import service.UserService;
+
 import java.util.Map;
 
 public class UserTest extends StellarBurgersAPITest {
