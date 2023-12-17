@@ -10,8 +10,8 @@ import java.util.Map;
 import static io.restassured.RestAssured.given;
 
 public class UserService {
-    private final String JSON_CONTENT_TYPE = "application/json";
-    private final String ENDPOINT = "/api/auth";
+    private static final String JSON_CONTENT_TYPE = "application/json";
+    private static final String ENDPOINT = "/api/auth";
 
     @Step("Создание пользователя")
     public Response createUser(Map<String, String> param){
@@ -24,10 +24,10 @@ public class UserService {
     }
 
     @Step("Удаление пользователя")
-    public Response deleteUser(String accessToken){
-        return given()
-                .header("Authorization", accessToken)
-                .delete(ENDPOINT + "/user");
+    public void deleteUser(String accessToken){
+        given()
+            .header("Authorization", accessToken)
+            .delete(ENDPOINT + "/user");
     }
 
     @Step("Логин пользователя")
@@ -67,7 +67,7 @@ public class UserService {
     @Step("Генерация тестовых данных для создания пользователя")
     public Map<String, String> getMapGeneratedDataUser() {
         HashMap<String, String> generatedData = new HashMap<>();
-        generatedData.put("email", RandomStringUtils.randomAlphabetic(10) + "@yandex.ru");
+        generatedData.put("email", RandomStringUtils.randomAlphabetic(10) + "@mail.ru");
         generatedData.put("password", RandomStringUtils.randomAlphabetic(10));
         generatedData.put("name", RandomStringUtils.randomAlphabetic(10));
         return generatedData;
