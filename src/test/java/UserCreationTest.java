@@ -1,7 +1,6 @@
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBodyExtractionOptions;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -90,13 +89,5 @@ public class UserCreationTest extends UserTest {
         Assert.assertEquals("Сообщение при создании пользователя без 'name' не соответствует ожидаемому"
                 , "Email, password and name are required fields", body.path("message"));
 
-    }
-
-    @After
-    public void tearDown() {
-        if (accessToken != null) {
-            getUserService().deleteUser(accessToken);
-            accessToken = null;
-        }
     }
 }
