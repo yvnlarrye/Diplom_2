@@ -15,6 +15,7 @@
         <aspectj.version>1.9.7</aspectj.version>
         <!-- версия Allure -->
         <allure.version>2.15.0</allure.version>
+        <assertJ.version>3.22.0</assertJ.version>
     </properties>
 
     <dependencies>
@@ -68,6 +69,11 @@
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertJ.version}</version>
         </dependency>
     </dependencies>
 
