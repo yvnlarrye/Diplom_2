@@ -8,37 +8,41 @@ import java.util.Map;
 
 public class UserCreationTest extends UserTest {
 
-    private Map<String, String> userData;
-    private String accessToken = null;
-
     @Test
     @DisplayName("Создание пользователя")
     public void createUserTest() {
-        userData = getUserService().getMapGeneratedDataUser();
+        setUserData(getUserService().getMapGeneratedDataUser());
 
-        ResponseBodyExtractionOptions body = getUserService().createUser(userData)
+        ResponseBodyExtractionOptions body = getUserService().createUser(getUserData())
                 .then()
                 .statusCode(200)
                 .extract().body();
 
-        accessToken = body.path("accessToken");
+        String accessToken = body.path("accessToken");
+        setAccessToken(accessToken);
 
-        Assert.assertTrue("Поле 'success' при создании пользователя не соответствует ожидаемому", body.path("success"));
-        Assert.assertEquals("Поле 'email' не соответствует ожидаемому при создании пользователя", userData.get("email").toLowerCase(), body.path("user.email"));
-        Assert.assertEquals("Поле 'name' не соответствует ожидаемому при создании пользователя", userData.get("name"), body.path("user.name"));
-        Assert.assertNotNull("Поле 'accessToken' равняется NULL при создании пользователя", accessToken);
-        Assert.assertNotNull("Поле 'refreshToken' равняется NULL при при авторизации", body.path("refreshToken"));
+        Assert.assertTrue("Поле 'success' при создании пользователя не соответствует ожидаемому",
+                body.path("success"));
+        Assert.assertEquals("Поле 'email' не соответствует ожидаемому при создании пользователя",
+                getUserData().get("email").toLowerCase(), body.path("user.email"));
+        Assert.assertEquals("Поле 'name' не соответствует ожидаемому при создании пользователя",
+                getUserData().get("name"), body.path("user.name"));
+        Assert.assertNotNull("Поле 'accessToken' равняется NULL при создании пользователя",
+                accessToken);
+        Assert.assertNotNull("Поле 'refreshToken' равняется NULL при при авторизации",
+                body.path("refreshToken"));
     }
 
     @Test
     @DisplayName("Создание уже существующего пользователя")
-    public void createDoubleUserTest() {
-        userData = getUserService().getMapGeneratedDataUser();
+    public void createUserThatAlreadyExistsTest() {
+        setUserData(getUserService().getMapGeneratedDataUser());
 
-        Response user = getUserService().createUser(userData);
-        accessToken = user.then().extract().body().path("accessToken");
+        Response user = getUserService().createUser(getUserData());
+        String accessToken = user.then().extract().body().path("accessToken");
+        setAccessToken(accessToken);
 
-        ResponseBodyExtractionOptions body = getUserService().createUser(userData)
+        ResponseBodyExtractionOptions body = getUserService().createUser(getUserData())
                 .then()
                 .statusCode(403)
                 .extract().body();

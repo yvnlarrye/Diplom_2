@@ -8,7 +8,7 @@ public class UserTest extends StellarBurgersAPITest {
 
     private final UserService userService = new UserService();
     private Map<String, String> userData;
-    private String accessToken = null;
+    private String accessToken;
 
     public UserService getUserService() {
         return userService;
@@ -16,6 +16,14 @@ public class UserTest extends StellarBurgersAPITest {
 
     public Map<String, String> getUserData() {
         return userData;
+    }
+
+    public void setUserData(Map<String, String> userData) {
+        this.userData = userData;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public String getAccessToken() {
